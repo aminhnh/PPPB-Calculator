@@ -167,6 +167,7 @@
             android:layout_weight="1">
 
             <com.google.android.material.button.MaterialButton
+                android:contentDescription="Backspace button"
                 app:icon="@drawable/baseline_backspace"
                 app:iconGravity="textStart"
                 app:iconSize="35dp"
