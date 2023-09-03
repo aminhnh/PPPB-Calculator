@@ -43,31 +43,25 @@ class MainActivity : AppCompatActivity() {
 
     private fun hasOperator(expression: String): Boolean{
         val splitString = expression.split("+", "-", "/", "x")
-        println("STR SIZE: ${splitString.size}")
         return splitString.size > 1
     }
     private fun endIsOperand(expression: String): Boolean{
         val last = expression.takeLast(1)
-        println("last: ${last}")
         return last.toIntOrNull() != null
     }
     private fun updateResult() {
         with(binding){
             val text = numberTop.text
-            println("masuk pudate result")
             if ( hasOperator(text.toString()) && endIsOperand(text.toString())){
                 var result = calculate(text.toString()).toString()
                 result = result.dropLastWhile { it == '0' }.dropLastWhile { it == '.' }
                 numberBottom.setText(result)
             } else if (!endIsOperand(text.toString())){
                 numberBottom.setText("")
-            }else {
-                println("masuk else")
             }
         }
     }
     private fun calculate(expression: String): Double{
-        println("masuk calculate")
         val operandString = expression.split("+","-","x","/")
         val operandDouble = operandString.map{ it.toDouble() }
         var operand = operandDouble.toMutableList()
@@ -78,49 +72,38 @@ class MainActivity : AppCompatActivity() {
         var result: BigDecimal
         var currentResult = 0.0
 
-        println(operator)
         while(operator.size > 0){
-            println("masuk while")
             if (operator.contains('x')){
-                println("Masuk x")
                 val index = operator.indexOf('x')
                 currentResult = operand[index] * operand[index+1]
                 operator.removeAt(index)
                 operand.removeAt(index)
                 operand.removeAt(index)
                 operand.add(index, currentResult)
-                println("end x")
             } else if ('/' in operator){
-                println("msk /")
                 val index = operator.indexOf('/')
                 currentResult = operand[index] / operand[index+1]
                 operator.removeAt(index)
                 operand.removeAt(index)
                 operand.removeAt(index)
                 operand.add(index, currentResult)
-                println("ed /")
             } else if ('+' in operator){
-                println("op +")
                 val index = operator.indexOf('+')
                 currentResult = operand[index] + operand[index+1]
                 operator.removeAt(index)
                 operand.removeAt(index)
                 operand.removeAt(index)
                 operand.add(index, currentResult)
-                println("ed +")
             } else if ('-' in operator){
-                println("op -")
                 val index = operator.indexOf('-')
                 currentResult = operand[index] - operand[index+1]
                 operator.removeAt(index)
                 operand.removeAt(index)
                 operand.removeAt(index)
                 operand.add(index, currentResult)
-                println("ed -")
             }
         }
         result = BigDecimal(operand[0])
-        print("RESULT: ${result}")
         return operand[0]
     }
     fun backspace(view: View){
