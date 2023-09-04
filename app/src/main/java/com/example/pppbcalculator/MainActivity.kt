@@ -20,21 +20,32 @@ class MainActivity : AppCompatActivity() {
         with(binding){
             val text = numberTop.text
             when((view as Button).text.toString()) {
-                // CANT HAVE OPERATOR RIGHT AFTER THE OTHER
                 "+" -> {
-                    numberTop.setText("${text}+")
+                    if(!endIsOperand(text.toString())){
+                        numberTop.setText( text.dropLast(1) )
+                    }
+                    numberTop.setText("${numberTop.text}+")
                 }
                 "-" -> {
-                    numberTop.setText("${text}-")
+                    if(!endIsOperand(text.toString())){
+                        numberTop.setText( text.dropLast(1) )
+                    }
+                    numberTop.setText("${numberTop.text}-")
                 }
                 "/" -> {
-                    numberTop.setText("${text}/")
+                    if(!endIsOperand(text.toString())){
+                        numberTop.setText( text.dropLast(1) )
+                    }
+                    numberTop.setText("${numberTop.text}/")
                 }
                 "x" -> {
-                    numberTop.setText("${text}x")
+                    if(!endIsOperand(text.toString())){
+                        numberTop.setText( text.dropLast(1) )
+                    }
+                    numberTop.setText("${numberTop.text}x")
                 }
                 else -> {
-                    numberTop.setText("${text}${view.text}")
+                    numberTop.setText("${numberTop.text}${view.text}")
                 }
             }
             updateResult()
